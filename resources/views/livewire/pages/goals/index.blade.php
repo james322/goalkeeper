@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\FirstGoalMotivation;
 use App\Models\Goal;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
@@ -38,9 +39,10 @@ new #[Layout('layouts.app')] class extends Component
     public function createGoal()
     {
         $this->validate();
-        Auth::user()
+        $goal = Auth::user()
             ->goals()
             ->create(['intent' => $this->pull('newGoal')]);
+        dispatch(new FirstGoalMotivation(Auth::user(), $goal));
         $this->js("localStorage.removeItem('newGoal')");
         unset($this->goals);
     }

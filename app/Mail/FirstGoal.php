@@ -2,8 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -16,10 +16,7 @@ class FirstGoal extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(public string $motivation, public User $user) {}
 
     /**
      * Get the message envelope.
@@ -27,7 +24,8 @@ class FirstGoal extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'First Goal',
+            subject: 'Your First Goal',
+
         );
     }
 
@@ -37,17 +35,7 @@ class FirstGoal extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'mail.goal.first',
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 }

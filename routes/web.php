@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::view('/', 'welcome');
+Route::get('/', HomeController::class)->middleware(['guest'])->name('home');
 
 Volt::route('goals', 'pages.goals.index')->middleware(['auth'])->name('goals.index');
 Volt::route('goals/{goal}', 'pages.goals.show')->middleware(['auth'])->name('goals.show');

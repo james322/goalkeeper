@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use App\Schedule\SendMotivation;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote')->hourly();
+Schedule::call(new SendMotivation)->wednesdays()->timezone('America/New_York')->at('12:00');
+Schedule::call(new SendMotivation)->fridays()->timezone('America/New_York')->at('12:00');
+Schedule::call(new SendMotivation)->sundays()->timezone('America/New_York')->at('12:00');
