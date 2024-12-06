@@ -40,10 +40,8 @@ class SendMotivation
 
                 ]);
 
-                foreach ($response->choices as $result) {
+                Mail::to($user)->send(new WeeklyMotivation($response->choices[0]->message->content, $user));
 
-                    Mail::to($user)->send(new WeeklyMotivation($result->message->content, $user));
-                }
             } catch (\Throwable $th) {
                 logger($th->getMessage());
             }

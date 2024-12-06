@@ -14,7 +14,7 @@ new #[Layout('layouts.app')] class extends Component
 {
     use WithPagination;
 
-    #[Validate(['min:1', 'max:500'])]
+    #[Validate(['required', 'min:1', 'max:500'])]
     public $newGoal = '';
 
     #[Url(except: '')]

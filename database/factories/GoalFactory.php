@@ -17,7 +17,26 @@ class GoalFactory extends Factory
     public function definition(): array
     {
         return [
-            'intent' => $this->faker->sentence()
+            'intent' => $this->faker->sentence(),
+            'is_complete' => $this->faker->boolean(),
         ];
+    }
+
+    public function incomplete(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_complete' => false,
+            ];
+        });
+    }
+
+    public function complete(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_complete' => true,
+            ];
+        });
     }
 }

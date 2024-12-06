@@ -59,10 +59,7 @@ class FirstGoalMotivation implements ShouldQueue
 
         ]);
 
-        foreach ($response->choices as $result) {
+        Mail::to($this->user)->send(new FirstGoal($response->choices[0]->message->content, $this->user));
 
-            Mail::to($this->user)->send(new FirstGoal($result->message->content, $this->user));
-
-        }
     }
 }
