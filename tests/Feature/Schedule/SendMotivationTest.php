@@ -8,7 +8,7 @@ use App\Schedule\SendMotivation;
 use OpenAI\Laravel\Facades\OpenAI;
 use OpenAI\Responses\Chat\CreateResponse;
 
-it('sends email to users with goal atleast 2 days old', function () {
+it('sends email to users with goals at least 2 days old', function () {
     User::factory()->has(Goal::factory()->incomplete())->create();
     User::factory()->has(Goal::factory()->incomplete())->create();
     WeeklyPrompt::factory()->create();
