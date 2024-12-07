@@ -43,8 +43,7 @@ class SendMotivation
                 Mail::to($user)->send(new WeeklyMotivation($response->choices[0]->message->content, $user));
 
             } catch (\Throwable $th) {
-                logger($th->getMessage());
-                throw new \Exception($th->getMessage());
+                logger()->error($th->getMessage());
             }
         });
     }
