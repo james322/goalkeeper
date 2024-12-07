@@ -17,7 +17,9 @@ class WeeklyPromptFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user' => $this->faker->sentence(),
+            'assistant' => $this->faker->sentence(),
+            'personality' => 'polite',
         ];
     }
 }

@@ -44,6 +44,7 @@ class SendMotivation
 
             } catch (\Throwable $th) {
                 logger($th->getMessage());
+                throw new \Exception($th->getMessage());
             }
         });
     }
