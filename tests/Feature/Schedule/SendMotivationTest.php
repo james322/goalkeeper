@@ -53,7 +53,30 @@ it('does not sends email to users with goals less than 2 days old', function () 
         User::factory()->has(Goal::factory()->incomplete())->create();
         call_user_func(new SendMotivation);
 
-        Mail::assertSent(WeeklyMotivation::class, 0);
+        Mail::assertNotSent(WeeklyMotivation::class);
+    });
+
+});
+
+it('only emails for incomplete goals are sent', function () {
+    WeeklyPrompt::factory()->create();
+    Mail::fake();
+    User::factory()->has(Goal::factory()->complete()->count(2))->create();
+
+    OpenAI::fake([CreateResponse::fake([
+        'choices' => [
+            [
+                'text' => 'awesome!',
+            ],
+        ],
+
+    ])]);
+
+    $this->travel(2)->days(function () {
+
+        call_user_func(new SendMotivation);
+
+        Mail::assertNotSent(WeeklyMotivation::class);
     });
 
 });
