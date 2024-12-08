@@ -113,11 +113,13 @@ new #[Layout('layouts.app')] class extends Component
         <div x-data="goalText">
             <textarea
                 @input="handleInput"
+                @keydown.ctrl.enter="save"
+                @focus="showKeyComboText = true"
+                @blur="showKeyComboText = false"
+                wire:model="newGoal"
                 class="block h-full w-full resize-none overflow-hidden border-0 border-b bg-transparent pb-0 text-gray-800 focus:ring-0 dark:text-gray-200"
                 placeholder="What would you like to accomplish?"
-                wire:model="newGoal"
-                name=""
-                id=""
+                name="new-goal"
             ></textarea>
 
             <div class="flex items-center justify-between pt-4">
@@ -127,9 +129,17 @@ new #[Layout('layouts.app')] class extends Component
                         /500
                     </span>
                 </div>
-                <x-secondary-button wire:click="createGoal" disabled x-bind:disabled="$wire.newGoal.length <= 0">
-                    Save
-                </x-secondary-button>
+                <div class="space-x-2">
+                    <span
+                        x-show="$wire.newGoal.length > 0 && showKeyComboText"
+                        class="text-xs text-gray-800/40 dark:text-gray-200/30"
+                    >
+                        ctrl+enter
+                    </span>
+                    <x-secondary-button wire:click="createGoal" disabled x-bind:disabled="$wire.newGoal.length <= 0">
+                        Save
+                    </x-secondary-button>
+                </div>
             </div>
         </div>
     </div>
@@ -168,6 +178,7 @@ new #[Layout('layouts.app')] class extends Component
         <script>
             Alpine.data('goalText', () => {
                 return {
+                    showKeyComboText: false,
                     limitCharacters() {
                         if ($wire.newGoal.length >= 500) {
                             $wire.newGoal = $wire.newGoal.substring(0, 500);
@@ -182,6 +193,12 @@ new #[Layout('layouts.app')] class extends Component
                     handleInput(e) {
                         this.limitCharacters();
                         this.autoResize(e);
+                    },
+                    save() {
+                        if ($wire.newGoal.length > 500 || $wire.newGoal.length < 1) {
+                            return;
+                        }
+                        $wire.createGoal();
                     },
                 };
             });
