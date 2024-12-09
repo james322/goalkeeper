@@ -1,2 +1,5 @@
 /resources/views/mail/**
+/resources/views/vendor/mail
 /storage
+composer.lock
+package-lock.json

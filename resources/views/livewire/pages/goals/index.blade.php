@@ -10,8 +10,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 
-new #[Layout('layouts.app')] class extends Component
-{
+new #[Layout('layouts.app')] class extends Component {
     use WithPagination;
 
     #[Validate(['required', 'min:1', 'max:500'])]
