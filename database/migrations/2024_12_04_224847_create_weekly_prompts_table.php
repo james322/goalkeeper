@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('weekly_prompts', function (Blueprint $table) {
             $table->id();
-            $table->string('assistant');
-            $table->string('user');
-            $table->string('personality');
+            $table->text('assistant');
+            $table->text('user');
+            $table->text('personality');
             $table->timestamps();
         });
     }
