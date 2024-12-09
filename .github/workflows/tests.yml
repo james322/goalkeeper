@@ -1,0 +1,31 @@
+name: Tests
+
+on:
+    push:
+        branches:
+            - main
+jobs:
+    tests:
+        runs-on: ubuntu-24.04
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+
+            - name: Setup
+              uses: ./.github/actions/setup
+              with:
+                  php-version: '8.4'
+                  php-extensions: 'dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite'
+
+            - name: Install Project Dependencies
+              run: composer install -q --no-interaction --no-progress
+
+            - name: Copy Environment File
+              run: cp .env.example .env
+
+            - name: Generate Application Key
+              run: php artisan key:generate
+
+            - name: Run Tests
+              run: php artisan test --compact
