@@ -14,7 +14,7 @@ new #[Layout('layouts.guest')] class extends Component
     public function sendVerification(): void
     {
         if (Auth::user()->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+            $this->redirectIntended(default: route('goals.index', absolute: false), navigate: true);
 
             return;
         }
@@ -41,7 +41,7 @@ new #[Layout('layouts.guest')] class extends Component
     </div>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+        <div class="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
             {{ __('A new verification link has been sent to the email address you provided during registration.') }}
         </div>
     @endif
@@ -51,7 +51,11 @@ new #[Layout('layouts.guest')] class extends Component
             {{ __('Resend Verification Email') }}
         </x-primary-button>
 
-        <button wire:click="logout" type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+        <button
+            wire:click="logout"
+            type="submit"
+            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+        >
             {{ __('Log Out') }}
         </button>
     </div>
